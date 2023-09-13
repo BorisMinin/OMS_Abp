@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OMS_Demo_Sample.Entities;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
@@ -53,6 +54,11 @@ public class OMS_Demo_SampleDbContext :
 
     #endregion
 
+    public DbSet<Category> Categories { get; set; }
+    public DbSet<Product> Products { get; set; }
+    public DbSet<Order> Orders { get; set; }
+    public DbSet<OrderDetail> orderDetails { get; set; }
+
     public OMS_Demo_SampleDbContext(DbContextOptions<OMS_Demo_SampleDbContext> options)
         : base(options)
     {
@@ -82,5 +88,35 @@ public class OMS_Demo_SampleDbContext :
         //    b.ConfigureByConvention(); //auto configure for the base class props
         //    //...
         //});
+
+        builder.Entity<Category>()
+            .HasMany(c => c.Products)
+            .WithOne(p => p.Category)
+            .HasForeignKey(p => p.CategoryId) 
+            .OnDelete(DeleteBehavior.Restrict); // ограничивает удаление родительской сущности при наличии дочерних сущностей
+
+        builder.Entity<Product>()
+            .HasMany(p => p.OrderDetails)
+            .WithOne(od => od.Product)
+            .HasForeignKey(od => od.ProductId)
+            .OnDelete(DeleteBehavior.Cascade); // при удалении основной сущности должны быть удалены и все зависимые сущности
+
+        builder.Entity<Order>()
+            .HasMany(o => o.OrderDetails)
+            .WithOne(od => od.Order)
+            .HasForeignKey(od => od.OrderId)
+            .OnDelete(DeleteBehavior.Cascade); // при удалении основной сущности должны быть удалены и все зависимые сущности
+
+        builder.Entity<OrderDetail>()
+            .HasOne(od => od.Product)
+            .WithMany(p => p.OrderDetails)
+            .HasForeignKey(od => od.ProductId)
+            .OnDelete(DeleteBehavior.Restrict); // ограничивает удаление родительской сущности при наличии дочерних сущностей
+
+        builder.Entity<OrderDetail>()
+            .HasOne(od => od.Order)
+            .WithMany(o => o.OrderDetails)
+            .HasForeignKey(od => od.OrderId)
+            .OnDelete(DeleteBehavior.Cascade); // при удалении основной сущности должны быть удалены и все зависимые сущности
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
@@ -17,7 +16,7 @@ public class OMS_Demo_SampleDbContextFactory : IDesignTimeDbContextFactory<OMS_D
         var configuration = BuildConfiguration();
 
         var builder = new DbContextOptionsBuilder<OMS_Demo_SampleDbContext>()
-            .UseSqlServer(configuration.GetConnectionString("Default"));
+            .UseSqlite(configuration.GetConnectionString("Default"));
 
         return new OMS_Demo_SampleDbContext(builder.Options);
     }
