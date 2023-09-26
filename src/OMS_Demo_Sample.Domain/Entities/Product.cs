@@ -1,10 +1,33 @@
-﻿using System.Collections.Generic;
-using Volo.Abp.Domain.Entities;
+﻿using OMS_Demo_Sample.CustomAttributes;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
+using Volo.Abp.Domain.Entities.Auditing;
 
 namespace OMS_Demo_Sample.Entities
 {
-    public class Product : Entity<int>
+    public class Product : FullAuditedAggregateRoot<int>
     {
+        private Product()
+        {
+            
+        }
+
+        internal Product(
+            [StartsWith (1)]
+            int id,
+
+            [NotNull] [MaxLength (100)]
+            string productName,
+
+            [NotNull] [MaxLength (25)]
+            Category category
+            ) : base(id)
+        {
+            ProductName = productName;
+            Category = category;
+        }
+
         public string ProductName { get; set; }
 
         public Category Category { get; set; }
