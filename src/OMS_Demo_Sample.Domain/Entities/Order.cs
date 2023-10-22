@@ -4,14 +4,41 @@ using Volo.Abp.Domain.Entities;
 
 namespace OMS_Demo_Sample.Entities
 {
-    public class Order : Entity<int>
+    public class Order : AggregateRoot<int>
     {
-        public DateTime? OrderDate { get; set; }
+        private Order() { }
 
-        public DateTime? RequiredDate { get; set; }
+        public Order(
+            int id,
+            int employeeId,
+            string? customerId = null
 
-        public decimal? Freight { get; set; }
 
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+            ) : base(id)
+        {
+
+        }
+
+        public int EmployeeId { get; private set; }
+
+        public string? CustomerId { get; private set; }
+
+        public double Freight { get; }
+
+        public DateTime OrderDate { get; private set; }
+
+        public DateTime RequiredDate { get; set; }
+
+        public string? ShipName { get; set; }
+
+        public string? ShipAddress { get; set; }
+
+        public string? ShipRegion { get; set; }
+
+        public string? ShipCity { get; set; }
+
+        public string? ShipPostalCode { get; set; }
+
+        public string? ShipCountry { get; set; }
     }
 }

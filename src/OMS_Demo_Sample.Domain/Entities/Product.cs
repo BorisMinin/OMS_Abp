@@ -1,39 +1,42 @@
-﻿using OMS_Demo_Sample.CustomAttributes;
-using System.Collections.Generic;
+﻿using JetBrains.Annotations;
+using OMS_Demo_Sample.Entities.Helpers;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
-using Volo.Abp.Domain.Entities.Auditing;
+using Volo.Abp.Domain.Entities;
 
 namespace OMS_Demo_Sample.Entities
 {
-    public class Product : FullAuditedAggregateRoot<int>
+    public class Product : Entity<int>
     {
-        private Product()
-        {
-            
-        }
+        private Product() {}
 
         internal Product(
-            [StartsWith (1)]
             int id,
-
-            [NotNull] [MaxLength (100)]
-            string productName,
-
-            [NotNull] [MaxLength (25)]
-            Category category
+            [NotNull][StringLength(40)] string productName,
+            int categoryId,
+            [CanBeNull] string quantityPerUnit,
+            double unitPrice,
+            short unitsInStock,
+            short unitsOnOrder,
+            short reorderLevel,
+            bool discontinued
             ) : base(id)
         {
-            ProductName = productName;
-            Category = category;
+            EntityUtilsHelper.SetEntityName(productName);
+            CategoryId = categoryId;
+            QuantityPerUnit = quantityPerUnit;
+            UnitPrice = unitPrice;
+            UnitsInStock = unitsInStock;
+            UnitsOnOrder = unitsOnOrder;
+            ReorderLevel = reorderLevel;
+            Discontinued = discontinued;
         }
+        [Required]
+        [StringLength(40)]
+        public string ProductName { get; private set; }
 
-        public string ProductName { get; set; }
+        public int? CategoryId { get; private set; }
 
-        public Category Category { get; set; }
-
-        public int? CategoryId { get; set; }
-
+        [StringLength(40)]
         public string QuantityPerUnit { get; set; }
 
         public double? UnitPrice { get; set; }
@@ -44,8 +47,6 @@ namespace OMS_Demo_Sample.Entities
 
         public int? ReorderLevel { get; set; }
 
-        public bool Discontinued { get; set; }
-
-        public ICollection<OrderDetail> OrderDetails { get; set; }
+        public bool? Discontinued { get; set; }
     }
 }

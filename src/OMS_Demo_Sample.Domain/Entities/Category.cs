@@ -1,38 +1,26 @@
 ﻿using JetBrains.Annotations;
-using OMS_Demo_Sample.CustomAttributes;
-using System.Collections.Generic;
+using OMS_Demo_Sample.Entities.Helpers;
 using System.ComponentModel.DataAnnotations;
-using Volo.Abp.Domain.Entities.Auditing;
+using Volo.Abp.Domain.Entities;
 
 namespace OMS_Demo_Sample.Entities
 {
-    /// <summary>
-    /// Бизнес правила для id:
-    /// 1. id не может быть null
-    /// 2. id не может быть пустой строкой
-    /// 3. id не может быть равно 0
-    /// 4. id не может иметь значение равное числу с плавающей точкой
-    /// 5. id должно иметь тип int
-    /// </summary>
-    public class Category : FullAuditedAggregateRoot<int>
+    public class Category : Entity<int>
     {
-        private Category()
-        {
-
-        }
+        private Category() {}
 
         internal Category(
-            [StartsWith (1)]
             int id,
-            [NotNull] [MaxLength (25)] string categoryName,
-            [CanBeNull] string description = null)
+            [NotNull][StringLength(15)] string categoryName,
+            string? description = null)
         : base(id)
         {
-
+            EntityUtilsHelper.SetEntityName(categoryName);
+            Description = description;
         }
-
+        [Required] 
+        [StringLength(15)]
         public string CategoryName { get; private set; }
         public string? Description { get; set; }
-        public virtual ICollection<Product> Products { get; set; }
     }
 }
