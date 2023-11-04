@@ -1,6 +1,7 @@
 ﻿using JetBrains.Annotations;
-using OMS_Demo_Sample.Entities.Helpers;
+using OMS_Demo_Sample.Entities.Products;
 using System.ComponentModel.DataAnnotations;
+using Volo.Abp;
 using Volo.Abp.Domain.Entities;
 
 namespace OMS_Demo_Sample.Entities
@@ -11,32 +12,21 @@ namespace OMS_Demo_Sample.Entities
 
         internal Product(
             int id,
-            [NotNull][StringLength(40)] string productName,
-            int categoryId,
-            [CanBeNull] string quantityPerUnit,
-            double unitPrice,
-            short unitsInStock,
-            short unitsOnOrder,
-            short reorderLevel,
-            bool discontinued
+            [NotNull] [StringLength(ProductConsts.MaxProductNameLength)] string productName,
+            [NotNull] int categoryId,
+            [NotNull] [StringLength(ProductConsts.MaxQuantityPerUnit)] string quantityPerUnit
             ) : base(id)
         {
-            EntityUtilsHelper.SetEntityName(productName);
+            SetProductName(productName);
             CategoryId = categoryId;
             QuantityPerUnit = quantityPerUnit;
-            UnitPrice = unitPrice;
-            UnitsInStock = unitsInStock;
-            UnitsOnOrder = unitsOnOrder;
-            ReorderLevel = reorderLevel;
-            Discontinued = discontinued;
         }
         [Required]
-        [StringLength(40)]
-        public string ProductName { get; private set; }
+        [StringLength(ProductConsts.MaxProductNameLength)] public string ProductName { get; private set; }
 
         public int? CategoryId { get; private set; }
 
-        [StringLength(40)]
+        [StringLength(ProductConsts.MaxQuantityPerUnit)] 
         public string QuantityPerUnit { get; set; }
 
         public double? UnitPrice { get; set; }
@@ -48,5 +38,19 @@ namespace OMS_Demo_Sample.Entities
         public int? ReorderLevel { get; set; }
 
         public bool? Discontinued { get; set; }
+
+        internal Product ChangeProductName(string productName)
+        {
+            SetProductName(productName);
+            return this;
+        }
+
+        public void SetProductName(string productName)
+        {
+            ProductName = Check.NotNullOrWhiteSpace(
+                productName,
+                nameof(productName),
+                maxLength: ProductConsts.MaxProductNameLength); 
+        }
     }
 }

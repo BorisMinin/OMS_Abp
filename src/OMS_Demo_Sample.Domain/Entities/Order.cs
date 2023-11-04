@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
 using Volo.Abp.Domain.Entities;
 
 namespace OMS_Demo_Sample.Entities
@@ -10,16 +9,20 @@ namespace OMS_Demo_Sample.Entities
 
         public Order(
             int id,
-            int employeeId,
-            string? customerId = null
-
-
+            int? employeeId,
+            string? customerId,
+            double freight,
+            DateTime requiredDate
             ) : base(id)
         {
-
+            EmployeeId = employeeId;
+            CustomerId = customerId;
+            Freight = freight;
+            OrderDate = DateTime.Now;
+            RequiredDate = requiredDate;
         }
 
-        public int EmployeeId { get; private set; }
+        public int? EmployeeId { get; private set; }
 
         public string? CustomerId { get; private set; }
 
