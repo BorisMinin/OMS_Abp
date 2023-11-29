@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using OMS_Demo_Sample.Entities.Categories;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities;
@@ -23,6 +24,7 @@ namespace OMS_Demo_Sample.Entities
         [StringLength(CategoryConsts.MaxCategoryNameLength)]
         public string CategoryName { get; private set; }
         public string? Description { get; set; }
+        public ICollection<Product> Products { get; set; }
 
         internal Category ChangeName([NotNull][StringLength(CategoryConsts.MaxCategoryNameLength)] string categoryName)
         {
