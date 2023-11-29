@@ -23,10 +23,6 @@ namespace OMS_Demo_Sample.EntityMamagers
         {
             _categoryRepository = categoryRepository;
         }
-        //public CategoryManager(ICategoryRepository categoryRepository)
-        //{
-        //    _categoryRepository = categoryRepository;
-        //}
 
         public async Task<Category> CreateCategory(Category category, CancellationToken token)
         {
