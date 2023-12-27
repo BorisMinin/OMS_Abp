@@ -5,7 +5,6 @@ using System.Threading;
 using Volo.Abp.Domain.Services;
 using Volo.Abp.Domain.Repositories;
 using System;
-using System.Text.RegularExpressions;
 
 namespace OMS_Demo_Sample.EntityMamagers
 {
@@ -21,10 +20,20 @@ namespace OMS_Demo_Sample.EntityMamagers
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<Category> CreateCategory(Category category, CancellationToken token)
+        public async Task<Category> GetByIdAsync(Category category, CancellationToken token)
+        {
+            return category;
+        }
+
+        public async Task<Category> CreateAsync(Category category, CancellationToken token)
         {
             await IsDuplicateCategoryName(category.CategoryName, token);
             return category;
+        }
+
+        public Task<Category> UpdateAsync(Category category, CancellationToken token)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<Category> DeleteAsync(Category category, CancellationToken token)
@@ -38,7 +47,7 @@ namespace OMS_Demo_Sample.EntityMamagers
         /// </summary>
         private async Task IsDuplicateCategoryName(string categoryName, CancellationToken token)
         {
-            if(await _categoryRepository.AnyAsync(c => c.CategoryName == categoryName, token))
+            if (await _categoryRepository.AnyAsync(x => x.CategoryName == categoryName, token))
                 throw new ArgumentException($"{categoryName} already exists!");
         }
         #endregion
