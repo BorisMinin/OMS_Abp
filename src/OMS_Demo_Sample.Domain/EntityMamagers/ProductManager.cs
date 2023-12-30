@@ -13,7 +13,7 @@ namespace OMS_Demo_Sample.EntityMamagers
     // 2. The created and updated Product instance must not contain the CategoryName that already exists in the database
     #endregion
 
-    public class ProductManager : DomainService, IProductManager//, EfCoreRepository
+    public class ProductManager : DomainService, IProductManager
     {
         private readonly IRepository<Product, int> _productRepository;
         private readonly IRepository<Category, int> _categoryRepository;
