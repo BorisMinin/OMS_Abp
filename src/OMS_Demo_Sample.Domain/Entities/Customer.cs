@@ -43,7 +43,7 @@ namespace OMS_Demo_Sample.Entities
         [StringLength(CustomerConsts.MaxFaxLength)]
         public string Fax { get; set; }
 
-        public virtual ICollection<Order> Orders { get; set; }
+        public ICollection<Order> Orders { get; set; }
 
         private void SetCompanyName(string companyName)
         {
