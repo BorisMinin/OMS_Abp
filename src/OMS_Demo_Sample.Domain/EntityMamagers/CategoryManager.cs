@@ -9,7 +9,7 @@ using System;
 namespace OMS_Demo_Sample.EntityMamagers
 {
     #region Business rules definition
-    // 1. Создаваемый экземпляр Category не должен содержать CategoryName, который уже существует в бд
+    // 1. The created and updated Category instance must not contain a CategoryName that already exists in the database
     #endregion
     public class CategoryManager : DomainService, ICategoryRepository
     {
@@ -31,9 +31,10 @@ namespace OMS_Demo_Sample.EntityMamagers
             return category;
         }
 
-        public Task<Category> UpdateAsync(Category category, CancellationToken token)
+        public async Task<Category> UpdateAsync(Category category, CancellationToken token)
         {
-            throw new NotImplementedException();
+            await IsDuplicateCategoryName(category.CategoryName, token);
+            return category;
         }
 
         public async Task<Category> DeleteAsync(Category category, CancellationToken token)
@@ -43,7 +44,7 @@ namespace OMS_Demo_Sample.EntityMamagers
 
         #region Business rules implementations
         /// <summary>
-        /// Business rule №1
+        /// Implementation of business rule №1
         /// </summary>
         private async Task IsDuplicateCategoryName(string categoryName, CancellationToken token)
         {

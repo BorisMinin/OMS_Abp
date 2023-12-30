@@ -6,6 +6,9 @@ namespace OMS_Demo_Sample.EntityMamagers.Interfaces
 {
     public interface IProductManager
     {
-        Task<Product> CreateProduct(Product product, CancellationToken token);
+        Task<Product> GetByIdAsync(Product product, CancellationToken token);
+        Task<Product> CreateAsync(Product product, CancellationToken token);
+        Task<Product> UpdateAsync(Product product, CancellationToken token);
+        Task<Product> DeleteAsync(Product product, CancellationToken token);
     }
 }

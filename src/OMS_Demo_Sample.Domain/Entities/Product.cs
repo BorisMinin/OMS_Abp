@@ -24,7 +24,7 @@ namespace OMS_Demo_Sample.Entities
         [Required]
         [StringLength(ProductConsts.MaxProductNameLength)] public string ProductName { get; private set; }
 
-        public int? CategoryId { get; private set; }
+        public int CategoryId { get; private set; }
 
         [StringLength(ProductConsts.MaxQuantityPerUnit)] 
         public string QuantityPerUnit { get; set; }
