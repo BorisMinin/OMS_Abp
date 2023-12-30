@@ -22,7 +22,8 @@ namespace OMS_Demo_Sample.Entities
             QuantityPerUnit = quantityPerUnit;
         }
         [Required]
-        [StringLength(ProductConsts.MaxProductNameLength)] public string ProductName { get; private set; }
+        [StringLength(ProductConsts.MaxProductNameLength)]
+        public string ProductName { get; private set; }
 
         public int CategoryId { get; private set; }
 
