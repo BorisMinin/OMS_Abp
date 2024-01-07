@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace OMS_Demo_Sample.EntityMamagers.Interfaces
 {
-    public interface IProductManager
+    public interface IProductRepository
     {
         Task<Product> GetByIdAsync(Product product, CancellationToken token);
         Task<Product> CreateAsync(Product product, CancellationToken token);

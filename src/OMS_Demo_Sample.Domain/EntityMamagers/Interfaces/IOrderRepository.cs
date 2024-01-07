@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace OMS_Demo_Sample.EntityMamagers.Interfaces
 {
-    public interface IOrderManager
+    public interface IOrderRepository
     {
         Task<Order> GetByIdAsync(Order order, CancellationToken token);
         Task<Order> CreateAsync(Order order, CancellationToken token);

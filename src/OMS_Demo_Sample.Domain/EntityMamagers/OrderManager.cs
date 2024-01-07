@@ -11,16 +11,12 @@ namespace OMS_Demo_Sample.EntityMamagers
     // 1. The created and updated Order instance must contain the CustomerId that already exists in the database
     #endregion
 
-    public class OrderManager : DomainService, IOrderManager
+    public class OrderManager : DomainService, IOrderRepository
     {
-        private readonly IRepository<Order, int> _orderRepository;
         private readonly IRepository<Customer, string> _customerRepository;
 
-        public OrderManager(
-            IRepository<Order, int> orderRepository,
-            IRepository<Customer, string> customerRepository)
+        public OrderManager(IRepository<Customer, string> customerRepository)
         {
-            _orderRepository = orderRepository;
             _customerRepository = customerRepository;
         }
   
