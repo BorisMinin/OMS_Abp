@@ -20,5 +20,5 @@
 - __Business Rules__:
   - The created and updated Product instance must contain the CategoryId that already exists in the database.
   - The created and updated Product instance must not contain the CategoryName that already exists in the database.
-  ### Shipper entity
+### Shipper entity
 - __Defenition__: Contains information about the companies responsible for delivering orders to customers.
