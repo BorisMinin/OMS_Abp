@@ -5,6 +5,8 @@ namespace OMS_Demo_Sample.Entities
 {
     public class OrderDetail : Entity
     {
+        private OrderDetail() { }
+
         public OrderDetail(
             int orderId,
             int productId)

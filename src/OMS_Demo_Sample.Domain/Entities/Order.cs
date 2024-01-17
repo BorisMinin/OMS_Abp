@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Threading;
 using Volo.Abp.Domain.Entities;
 
 namespace OMS_Demo_Sample.Entities

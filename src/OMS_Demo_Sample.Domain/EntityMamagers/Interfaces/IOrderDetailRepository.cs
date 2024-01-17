@@ -6,9 +6,6 @@ namespace OMS_Demo_Sample.EntityMamagers.Interfaces
 {
     public interface IOrderDetailRepository
     {
-        Task<OrderDetail> GetByIdAsync(OrderDetail orderDetail, CancellationToken token);
         Task<OrderDetail> CreateAsync(OrderDetail orderDetail, CancellationToken token);
-        Task<OrderDetail> UpdateAsync(OrderDetail orderDetail, CancellationToken token);
-        Task<OrderDetail> DeleteAsync(OrderDetail orderDetail, CancellationToken token);
     }
 }
