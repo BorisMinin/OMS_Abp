@@ -1,4 +1,6 @@
 # OMS_Demo_Sample
+## Description
+The Order Management System is a real-time application based on the Northwind database. The DDD pattern is implemented using the Abp.Framework. This project is designed to work in conditions where business rules are constantly changing. Adding and modifying business rules is done through EntityManagers.
 ## Entities Definition
 ### Category entity
 - __Definition__: Contains information about the categories of products available for sale. Provides an organized way to categorize products.
