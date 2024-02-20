@@ -1,4 +1,4 @@
-# OMS_ABP
+# OMS_Abp
 ## Description
 The OMS is a REST API application with folowing notifications. Based on DDD principles and Abp.Framework. Created on .Net 7 (Migration to .Net 8 version comming soon). The Northwind demo database in SQLite format is used to facilitate distribution. The project was created using the author's set of business rules. The project is aimed for working with frequently changing business rules. Adding and modifying business rules is done through EntityManagers.
 ### Used books:
@@ -7,7 +7,7 @@ The OMS is a REST API application with folowing notifications. Based on DDD prin
 - [Mastering ABP Framework: Build maintainable .NET solutions by implementing software development best practices](https://www.amazon.com/Mastering-ABP-Framework-maintainable-implementing/dp/1801079242)
 ### Project links:
 - [ABP Documentation](https://docs.abp.io/en/abp/latest)
-- [Demo version](https://github.com/BorisMinin/OMS_Demo_Sample)
+- [Demo version](https://github.com/BorisMinin/OMS_Abp)
 ## Entities Definition
 ### Category entity
 - __Definition__: Contains information about the categories of products available for sale. Provides an organized way to categorize products.
