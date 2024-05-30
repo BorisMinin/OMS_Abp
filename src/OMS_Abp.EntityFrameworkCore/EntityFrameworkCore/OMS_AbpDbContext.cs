@@ -56,6 +56,7 @@ public class OMS_AbpDbContext :
 
     public DbSet<Category> Categories { get; set; }
     public DbSet<Customer> Customers { get; set; }
+    public DbSet<Employee> Employees { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderDetail> OrderDetails { get; set; }
     public DbSet<Product> Products { get; set; }
@@ -84,8 +85,10 @@ public class OMS_AbpDbContext :
         #region entities
         builder.Entity<Category>();
         builder.Entity<Customer>();
+        builder.Entity<Employee>();
         builder.Entity<Order>();
-        builder.Entity<OrderDetail>();
+        builder.Entity<OrderDetail>()
+            .HasKey(x => new { x.OrderId, x.ProductId });
         builder.Entity<Product>();
         #endregion
     }
