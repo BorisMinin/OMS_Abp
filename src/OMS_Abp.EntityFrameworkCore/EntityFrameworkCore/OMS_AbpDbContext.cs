@@ -17,14 +17,12 @@ using Volo.Abp.TenantManagement.EntityFrameworkCore;
 
 namespace OMS_Abp.EntityFrameworkCore;
 
-[ReplaceDbContext(typeof(IIdentityDbContext))]
 [ReplaceDbContext(typeof(ITenantManagementDbContext))]
 [ConnectionStringName("Default")]
 public class OMS_AbpDbContext :
     AbpDbContext<OMS_AbpDbContext>,
-    IIdentityDbContext,
-    ITenantManagementDbContext
-    //, ISettingManagementDbContext
+    ITenantManagementDbContext,
+    ISettingManagementDbContext
 {
     #region Entities from the modules
     //Identity
@@ -42,7 +40,7 @@ public class OMS_AbpDbContext :
 
     public DbSet<Setting> Settings { get; set; }
 
-    //public DbSet<SettingDefinitionRecord> SettingDefinitionRecords { get; set; }
+    public DbSet<SettingDefinitionRecord> SettingDefinitionRecords { get; set; }
 
     #endregion
 

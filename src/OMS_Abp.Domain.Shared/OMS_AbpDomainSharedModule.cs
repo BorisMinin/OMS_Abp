@@ -1,4 +1,4 @@
-﻿using OMS_Abp.Localization;
+using OMS_Abp.Localization;
 using Volo.Abp.AuditLogging;
 using Volo.Abp.BackgroundJobs;
 using Volo.Abp.FeatureManagement;
@@ -25,7 +25,8 @@ namespace OMS_Abp;
     typeof(AbpSettingManagementDomainSharedModule),
     typeof(AbpTenantManagementDomainSharedModule)    
     )]
-public class OMS_AbpDomainSharedModule : AbpModule
+    [DependsOn(typeof(AbpLocalizationModule))]
+    public class OMS_AbpDomainSharedModule : AbpModule
 {
     public override void PreConfigureServices(ServiceConfigurationContext context)
     {
