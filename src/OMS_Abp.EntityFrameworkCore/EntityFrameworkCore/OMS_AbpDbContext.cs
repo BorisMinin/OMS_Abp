@@ -37,9 +37,7 @@ public class OMS_AbpDbContext :
     // Tenant Management
     public DbSet<Tenant> Tenants { get; set; }
     public DbSet<TenantConnectionString> TenantConnectionStrings { get; set; }
-
     public DbSet<Setting> Settings { get; set; }
-
     public DbSet<SettingDefinitionRecord> SettingDefinitionRecords { get; set; }
 
     #endregion
@@ -70,6 +68,13 @@ public class OMS_AbpDbContext :
         builder.ConfigureOpenIddict();
         builder.ConfigureFeatureManagement();
         builder.ConfigureTenantManagement();
+
+        //builder.ConfigurePermissionManagement();
+        //builder.ConfigureSettingManagement();
+        //builder.ConfigureBackgroundJobs();
+        //builder.ConfigureOpenIddict();
+        //builder.ConfigureTenantManagement();
+
         #endregion
 
         #region entities

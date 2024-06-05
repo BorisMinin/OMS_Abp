@@ -37,6 +37,7 @@ public class OMS_AbpDomainModule : AbpModule
         Configure<AbpLocalizationOptions>(options =>
         {
             // TODO: some lines is blocked with error "LanguageInfo does not contain a constructor that takes 4 arguments". This error may be fixed in a future version 
+
             //options.Languages.Add(new LanguageInfo("ar", "ar", "العربية", "ae"));
             options.Languages.Add(new LanguageInfo("cs", "cs", "Čeština"));
             //options.Languages.Add(new LanguageInfo("en", "en", "English", "gb"));
