@@ -1,65 +1,76 @@
-﻿using OMS_Abp.Entities.Eemployees;
+﻿#nullable enable
+using OMS_Abp.Entities.Employees;
 using System;
+using System.Collections.Generic;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities;
 
-namespace OMS_Abp.Entities
+namespace OMS_Abp.Domain.Entities;
+
+public class Employee : Entity<int>
 {
-    public class Employee : Entity<int>
+    public Employee(int id, string firstName, string lastName)
+        : base(id)
     {
-        public Employee(int id, string firstName, string lastName)
-            : base(id)
-        {
-            SetFirstName(firstName);
-            SetLastName(lastName);
-        }
+        SetFirstName(firstName);
+        SetLastName(lastName);
+    }
 
-        public string? LastName { get; private set; }
+    public string LastName { get; private set; } = null!;
 
-        public string? FirstName { get; private set; }
+    public string FirstName { get; private set; } = null!;
 
-        public string? Title { get; set; }
+    public string? Title { get; set; }
 
-        public string? TitleOfCourtesy { get; set; }
+    public string? TitleOfCourtesy { get; set; }
 
-        public DateTime BirthDate { get; set; }
+    public DateTime? BirthDate { get; set; }
 
-        public DateTime HireDate { get; set; }
+    public DateTime? HireDate { get; set; }
 
-        public string? Address { get; set; }
+    public string? Address { get; set; }
 
-        public string? City { get; set; }
+    public string? City { get; set; }
 
-        public string? Region { get; set; }
+    public string? Region { get; set; }
 
-        public string? PostalCode { get; set; }
+    public string? PostalCode { get; set; }
 
-        public string? Country { get; set; }
+    public string? Country { get; set; }
 
-        public string? HomePhone { get; set; }
+    public string? HomePhone { get; set; }
 
-        public string? Extension { get; set; }
+    public string? Extension { get; set; }
 
-        public string? Notes { get; set; }
+    public byte[]? Photo { get; set; }
 
-        public int? ReportsTo { get; set; }
+    public string? Notes { get; set; }
 
-        public string? PhotoPath { get; set; }
+    public int? ReportsTo { get; set; }
 
-        private void SetFirstName(string firstName)
-        {
-            FirstName = Check.NotNullOrWhiteSpace(
-                firstName,
-                nameof(firstName),
-                maxLength: EmployeeConsts.MaxEployeeFirstNameLength);
-        }
+    public string? PhotoPath { get; set; }
 
-        private void SetLastName(string lastName)
-        {
-            LastName = Check.NotNullOrWhiteSpace(
-                lastName,
-                nameof(lastName),
-                maxLength: EmployeeConsts.MaxEployeeLastNameLength);
-        }
+    public virtual ICollection<EmployeeTerritory> EmployeeTerritories { get; set; } = new List<EmployeeTerritory>();
+
+    public virtual ICollection<Employee> InverseReportsToNavigation { get; set; } = new List<Employee>();
+
+    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+
+    public virtual Employee? ReportsToNavigation { get; set; }
+
+    private void SetFirstName(string firstName)
+    {
+        FirstName = Check.NotNullOrWhiteSpace(
+            firstName,
+            nameof(firstName),
+            maxLength: EmployeeConsts.MaxFirstNameLength);
+    }
+
+    private void SetLastName(string lastName)
+    {
+        LastName = Check.NotNullOrWhiteSpace(
+            lastName,
+            nameof(lastName),
+            maxLength: EmployeeConsts.MaxLastNameLength);
     }
 }

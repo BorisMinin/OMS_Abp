@@ -1,10 +1,10 @@
-﻿using OMS_Abp.Entities;
-using OMS_Abp.EntityMamagers.Interfaces;
+﻿using OMS_Abp.EntityMamagers.Interfaces;
 using System.Threading.Tasks;
 using System.Threading;
 using Volo.Abp.Domain.Services;
 using Volo.Abp.Domain.Repositories;
 using System;
+using OMS_Abp.Domain.Entities;
 
 namespace OMS_Abp.EntityMamagers
 {

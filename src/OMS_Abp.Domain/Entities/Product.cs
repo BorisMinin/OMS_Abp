@@ -1,58 +1,64 @@
-﻿using JetBrains.Annotations;
+﻿#nullable enable
 using OMS_Abp.Entities.Products;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities;
 
-namespace OMS_Abp.Entities
+namespace OMS_Abp.Domain.Entities;
+
+public class Product : Entity<int>
 {
-    public class Product : Entity<int>
+    private Product() { }
+
+    internal Product(
+        int id,
+        [NotNull][StringLength(ProductConsts.MaxProductNameLength)] string productName,
+        [NotNull] int categoryId,
+        [NotNull][StringLength(ProductConsts.MaxQuantityPerUnit)] string quantityPerUnit
+        ) : base(id)
     {
-        private Product() {}
+        SetProductName(productName);
+        CategoryId = categoryId;
+        QuantityPerUnit = quantityPerUnit;
+    }
 
-        internal Product(
-            int id,
-            [NotNull] [StringLength(ProductConsts.MaxProductNameLength)] string productName,
-            [NotNull] int categoryId,
-            [NotNull] [StringLength(ProductConsts.MaxQuantityPerUnit)] string quantityPerUnit
-            ) : base(id)
-        {
-            SetProductName(productName);
-            CategoryId = categoryId;            
-            QuantityPerUnit = quantityPerUnit;
-        }
-        [Required]
-        [StringLength(ProductConsts.MaxProductNameLength)]
-        public string ProductName { get; private set; }
+    public string ProductName { get; set; } = null!;
 
-        public int CategoryId { get; private set; }
-        public Category Category {  get; set; }
+    public int? SupplierId { get; set; }
 
-        [StringLength(ProductConsts.MaxQuantityPerUnit)] 
-        public string QuantityPerUnit { get; set; }
+    public int? CategoryId { get; set; }
 
-        public double? UnitPrice { get; set; }
+    public string? QuantityPerUnit { get; set; }
 
-        public int? UnitsInStock { get; set; }
+    public double? UnitPrice { get; set; }
 
-        public int? UnitsOnOrder { get; set; }
+    public short? UnitsInStock { get; set; }
 
-        public int? ReorderLevel { get; set; }
+    public short? UnitsOnOrder { get; set; }
 
-        public bool? Discontinued { get; set; }
+    public short? ReorderLevel { get; set; }
 
-        internal Product ChangeProductName(string productName)
-        {
-            SetProductName(productName);
-            return this;
-        }
+    public bool Discontinued { get; set; }
 
-        public void SetProductName(string productName)
-        {
-            ProductName = Check.NotNullOrWhiteSpace(
-                productName,
-                nameof(productName),
-                maxLength: ProductConsts.MaxProductNameLength); 
-        }
+    public virtual Category? Category { get; set; }
+
+    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+
+    public virtual Supplier? Supplier { get; set; }
+
+    internal Product ChangeProductName(string productName)
+    {
+        SetProductName(productName);
+        return this;
+    }
+
+    public void SetProductName(string productName)
+    {
+        ProductName = Check.NotNullOrWhiteSpace(
+            productName,
+            nameof(productName),
+            maxLength: ProductConsts.MaxProductNameLength);
     }
 }

@@ -18,151 +18,232 @@ namespace OMS_Abp.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("_Abp_DatabaseProvider", EfCoreDatabaseProvider.Sqlite)
-                .HasAnnotation("ProductVersion", "8.0.1");
+                .HasAnnotation("ProductVersion", "8.0.4");
 
-            modelBuilder.Entity("OMS_Abp.Entities.Category", b =>
+            modelBuilder.Entity("OMS_Abp.Domain.Entities.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("CategoryID");
 
                     b.Property<string>("CategoryName")
                         .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(15)")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("Description")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("ntext");
+
+                    b.Property<byte[]>("Picture")
+                        .HasColumnType("image");
 
                     b.HasKey("Id");
+
+                    b.HasIndex(new[] { "CategoryName" }, "Categories_CategoryName");
 
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("OMS_Abp.Entities.Customer", b =>
+            modelBuilder.Entity("OMS_Abp.Domain.Entities.Customer", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nchar(5)")
+                        .HasColumnName("CustomerID");
 
                     b.Property<string>("Address")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(60)")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(15)")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("CompanyName")
                         .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(40)")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("ContactName")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(30)")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("ContactTitle")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(30)")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("Country")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(15)")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("Fax")
-                        .IsRequired()
-                        .HasMaxLength(24)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(24)")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasMaxLength(24)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(24)")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("PostalCode")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(10)")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("Region")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(15)")
+                        .UseCollation("NOCASE");
 
                     b.HasKey("Id");
+
+                    b.HasIndex(new[] { "City" }, "Customers_City");
+
+                    b.HasIndex(new[] { "CompanyName" }, "Customers_CompanyName");
+
+                    b.HasIndex(new[] { "PostalCode" }, "Customers_PostalCode");
+
+                    b.HasIndex(new[] { "Region" }, "Customers_Region");
 
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("OMS_Abp.Entities.Employee", b =>
+            modelBuilder.Entity("OMS_Abp.Domain.Entities.CustomerCustomerDemo", b =>
+                {
+                    b.Property<string>("CustomerId")
+                        .HasColumnType("nchar(5)")
+                        .HasColumnName("CustomerID");
+
+                    b.Property<string>("CustomerTypeId")
+                        .HasColumnType("nchar(10)")
+                        .HasColumnName("CustomerTypeID")
+                        .UseCollation("NOCASE");
+
+                    b.HasKey("CustomerId", "CustomerTypeId");
+
+                    b.HasIndex("CustomerTypeId");
+
+                    b.ToTable("CustomerCustomerDemo", (string)null);
+                });
+
+            modelBuilder.Entity("OMS_Abp.Domain.Entities.CustomerDemographic", b =>
+                {
+                    b.Property<string>("CustomerTypeId")
+                        .HasColumnType("nchar(10)")
+                        .HasColumnName("CustomerTypeID");
+
+                    b.Property<string>("CustomerDesc")
+                        .HasColumnType("ntext");
+
+                    b.HasKey("CustomerTypeId");
+
+                    b.ToTable("CustomerDemographics");
+                });
+
+            modelBuilder.Entity("OMS_Abp.Domain.Entities.Employee", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("EmployeeID");
 
                     b.Property<string>("Address")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(60)")
+                        .UseCollation("NOCASE");
 
-                    b.Property<DateTime>("BirthDate")
-                        .HasColumnType("TEXT");
+                    b.Property<DateTime?>("BirthDate")
+                        .HasColumnType("datetime");
 
                     b.Property<string>("City")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(15)")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("Country")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(15)")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("Extension")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(4)")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("TEXT");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(10)")
+                        .UseCollation("NOCASE");
 
-                    b.Property<DateTime>("HireDate")
-                        .HasColumnType("TEXT");
+                    b.Property<DateTime?>("HireDate")
+                        .HasColumnType("datetime");
 
                     b.Property<string>("HomePhone")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(24)")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("TEXT");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("Notes")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("ntext");
+
+                    b.Property<byte[]>("Photo")
+                        .HasColumnType("image");
 
                     b.Property<string>("PhotoPath")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(255)")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("PostalCode")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(10)")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("Region")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(15)")
+                        .UseCollation("NOCASE");
 
                     b.Property<int?>("ReportsTo")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INT");
 
                     b.Property<string>("Title")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(30)")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("TitleOfCourtesy")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(25)")
+                        .UseCollation("NOCASE");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ReportsTo");
+
+                    b.HasIndex(new[] { "LastName" }, "Employees_LastName");
+
+                    b.HasIndex(new[] { "PostalCode" }, "Employees_PostalCode");
 
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("OMS_Abp.Entities.Order", b =>
+            modelBuilder.Entity("OMS_Abp.Domain.Entities.EmployeeTerritory", b =>
+                {
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("INT")
+                        .HasColumnName("EmployeeID");
+
+                    b.Property<string>("TerritoryId")
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("TerritoryID")
+                        .UseCollation("NOCASE");
+
+                    b.HasKey("EmployeeId", "TerritoryId");
+
+                    b.HasIndex("TerritoryId");
+
+                    b.ToTable("EmployeeTerritories");
+                });
+
+            modelBuilder.Entity("OMS_Abp.Domain.Entities.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("OrderID");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -172,108 +253,294 @@ namespace OMS_Abp.Migrations
                         .HasColumnName("ConcurrencyStamp");
 
                     b.Property<string>("CustomerId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nchar(5)")
+                        .HasColumnName("CustomerID")
+                        .UseCollation("NOCASE");
 
                     b.Property<int?>("EmployeeId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INT")
+                        .HasColumnName("EmployeeID");
 
                     b.Property<string>("ExtraProperties")
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("ExtraProperties");
 
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("TEXT");
+                    b.Property<double?>("Freight")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("money")
+                        .HasDefaultValue(0.0);
 
-                    b.Property<DateTime>("RequiredDate")
-                        .HasColumnType("TEXT");
+                    b.Property<DateTime?>("OrderDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime?>("RequiredDate")
+                        .HasColumnType("datetime");
 
                     b.Property<string>("ShipAddress")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(60)")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("ShipCity")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(15)")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("ShipCountry")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(15)")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("ShipName")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(40)")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("ShipPostalCode")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(10)")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("ShipRegion")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(15)")
+                        .UseCollation("NOCASE");
+
+                    b.Property<int?>("ShipVia")
+                        .HasColumnType("INT");
+
+                    b.Property<DateTime?>("ShippedDate")
+                        .HasColumnType("datetime");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex(new[] { "CustomerId" }, "Orders_CustomerID");
+
+                    b.HasIndex(new[] { "CustomerId" }, "Orders_CustomersOrders");
+
+                    b.HasIndex(new[] { "EmployeeId" }, "Orders_EmployeeID");
+
+                    b.HasIndex(new[] { "EmployeeId" }, "Orders_EmployeesOrders");
+
+                    b.HasIndex(new[] { "OrderDate" }, "Orders_OrderDate");
+
+                    b.HasIndex(new[] { "ShipPostalCode" }, "Orders_ShipPostalCode");
+
+                    b.HasIndex(new[] { "ShippedDate" }, "Orders_ShippedDate");
+
+                    b.HasIndex(new[] { "ShipVia" }, "Orders_ShippersOrders");
 
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("OMS_Abp.Entities.OrderDetail", b =>
+            modelBuilder.Entity("OMS_Abp.Domain.Entities.OrderDetail", b =>
                 {
                     b.Property<int>("OrderId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INT")
+                        .HasColumnName("OrderID");
 
                     b.Property<int>("ProductId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INT")
+                        .HasColumnName("ProductID");
 
-                    b.Property<float>("Discount")
+                    b.Property<double>("Discount")
                         .HasColumnType("REAL");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
+                    b.Property<short>("Quantity")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("smallint")
+                        .HasDefaultValue((short)1);
 
                     b.Property<double>("UnitPrice")
                         .HasColumnType("money");
 
                     b.HasKey("OrderId", "ProductId");
 
+                    b.HasIndex(new[] { "OrderId" }, "Order Details_OrderID");
+
+                    b.HasIndex(new[] { "OrderId" }, "Order Details_OrdersOrder_Details");
+
+                    b.HasIndex(new[] { "ProductId" }, "Order Details_ProductID");
+
+                    b.HasIndex(new[] { "ProductId" }, "Order Details_ProductsOrder_Details");
+
                     b.ToTable("OrderDetails");
                 });
 
-            modelBuilder.Entity("OMS_Abp.Entities.Product", b =>
+            modelBuilder.Entity("OMS_Abp.Domain.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ProductID");
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("INTEGER");
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("INT")
+                        .HasColumnName("CategoryID");
 
-                    b.Property<bool?>("Discontinued")
-                        .HasColumnType("INTEGER");
+                    b.Property<bool>("Discontinued")
+                        .HasColumnType("bit");
 
                     b.Property<string>("ProductName")
                         .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(40)")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("QuantityPerUnit")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(20)")
+                        .UseCollation("NOCASE");
 
-                    b.Property<int?>("ReorderLevel")
-                        .HasColumnType("INTEGER");
+                    b.Property<short?>("ReorderLevel")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("smallint")
+                        .HasDefaultValue((short)0);
+
+                    b.Property<int?>("SupplierId")
+                        .HasColumnType("INT")
+                        .HasColumnName("SupplierID");
 
                     b.Property<double?>("UnitPrice")
-                        .HasColumnType("REAL");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("money")
+                        .HasDefaultValue(0.0);
 
-                    b.Property<int?>("UnitsInStock")
-                        .HasColumnType("INTEGER");
+                    b.Property<short?>("UnitsInStock")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("smallint")
+                        .HasDefaultValue((short)0);
 
-                    b.Property<int?>("UnitsOnOrder")
-                        .HasColumnType("INTEGER");
+                    b.Property<short?>("UnitsOnOrder")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("smallint")
+                        .HasDefaultValue((short)0);
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex(new[] { "CategoryId" }, "Products_CategoriesProducts");
+
+                    b.HasIndex(new[] { "CategoryId" }, "Products_CategoryID");
+
+                    b.HasIndex(new[] { "ProductName" }, "Products_ProductName");
+
+                    b.HasIndex(new[] { "SupplierId" }, "Products_SupplierID");
+
+                    b.HasIndex(new[] { "SupplierId" }, "Products_SuppliersProducts");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("OMS_Abp.Domain.Entities.Region", b =>
+                {
+                    b.Property<int>("RegionId")
+                        .HasColumnType("INT")
+                        .HasColumnName("RegionID");
+
+                    b.Property<string>("RegionDescription")
+                        .IsRequired()
+                        .HasColumnType("nchar(50)")
+                        .UseCollation("NOCASE");
+
+                    b.HasKey("RegionId");
+
+                    b.ToTable("Region", (string)null);
+                });
+
+            modelBuilder.Entity("OMS_Abp.Domain.Entities.Shipper", b =>
+                {
+                    b.Property<int>("ShipperId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ShipperID");
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(40)")
+                        .UseCollation("NOCASE");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(24)")
+                        .UseCollation("NOCASE");
+
+                    b.HasKey("ShipperId");
+
+                    b.ToTable("Shippers");
+                });
+
+            modelBuilder.Entity("OMS_Abp.Domain.Entities.Supplier", b =>
+                {
+                    b.Property<int>("SupplierId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("SupplierID");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(60)")
+                        .UseCollation("NOCASE");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(15)")
+                        .UseCollation("NOCASE");
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(40)")
+                        .UseCollation("NOCASE");
+
+                    b.Property<string>("ContactName")
+                        .HasColumnType("nvarchar(30)")
+                        .UseCollation("NOCASE");
+
+                    b.Property<string>("ContactTitle")
+                        .HasColumnType("nvarchar(30)")
+                        .UseCollation("NOCASE");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(15)")
+                        .UseCollation("NOCASE");
+
+                    b.Property<string>("Fax")
+                        .HasColumnType("nvarchar(24)")
+                        .UseCollation("NOCASE");
+
+                    b.Property<string>("HomePage")
+                        .HasColumnType("ntext");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(24)")
+                        .UseCollation("NOCASE");
+
+                    b.Property<string>("PostalCode")
+                        .HasColumnType("nvarchar(10)")
+                        .UseCollation("NOCASE");
+
+                    b.Property<string>("Region")
+                        .HasColumnType("nvarchar(15)")
+                        .UseCollation("NOCASE");
+
+                    b.HasKey("SupplierId");
+
+                    b.HasIndex(new[] { "CompanyName" }, "Suppliers_CompanyName");
+
+                    b.HasIndex(new[] { "PostalCode" }, "Suppliers_PostalCode");
+
+                    b.ToTable("Suppliers");
+                });
+
+            modelBuilder.Entity("OMS_Abp.Domain.Entities.Territory", b =>
+                {
+                    b.Property<string>("TerritoryId")
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("TerritoryID");
+
+                    b.Property<int>("RegionId")
+                        .HasColumnType("INT")
+                        .HasColumnName("RegionID");
+
+                    b.Property<string>("TerritoryDescription")
+                        .IsRequired()
+                        .HasColumnType("nchar(50)")
+                        .UseCollation("NOCASE");
+
+                    b.HasKey("TerritoryId");
+
+                    b.HasIndex("RegionId");
+
+                    b.ToTable("Territories");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>
@@ -2015,33 +2282,110 @@ namespace OMS_Abp.Migrations
                     b.ToTable("AbpTenantConnectionStrings", (string)null);
                 });
 
-            modelBuilder.Entity("OMS_Abp.Entities.Order", b =>
+            modelBuilder.Entity("OMS_Abp.Domain.Entities.CustomerCustomerDemo", b =>
                 {
-                    b.HasOne("OMS_Abp.Entities.Customer", "Customer")
+                    b.HasOne("OMS_Abp.Domain.Entities.Customer", "Customer")
+                        .WithMany("CustomerCustomerDemos")
+                        .HasForeignKey("CustomerId")
+                        .IsRequired();
+
+                    b.HasOne("OMS_Abp.Domain.Entities.CustomerDemographic", "CustomerType")
+                        .WithMany("CustomerCustomerDemos")
+                        .HasForeignKey("CustomerTypeId")
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("CustomerType");
+                });
+
+            modelBuilder.Entity("OMS_Abp.Domain.Entities.Employee", b =>
+                {
+                    b.HasOne("OMS_Abp.Domain.Entities.Employee", "ReportsToNavigation")
+                        .WithMany("InverseReportsToNavigation")
+                        .HasForeignKey("ReportsTo");
+
+                    b.Navigation("ReportsToNavigation");
+                });
+
+            modelBuilder.Entity("OMS_Abp.Domain.Entities.EmployeeTerritory", b =>
+                {
+                    b.HasOne("OMS_Abp.Domain.Entities.Employee", "Employee")
+                        .WithMany("EmployeeTerritories")
+                        .HasForeignKey("EmployeeId")
+                        .IsRequired();
+
+                    b.HasOne("OMS_Abp.Domain.Entities.Territory", "Territory")
+                        .WithMany("EmployeeTerritories")
+                        .HasForeignKey("TerritoryId")
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Territory");
+                });
+
+            modelBuilder.Entity("OMS_Abp.Domain.Entities.Order", b =>
+                {
+                    b.HasOne("OMS_Abp.Domain.Entities.Customer", "Customer")
                         .WithMany("Orders")
                         .HasForeignKey("CustomerId");
 
+                    b.HasOne("OMS_Abp.Domain.Entities.Employee", "Employee")
+                        .WithMany("Orders")
+                        .HasForeignKey("EmployeeId");
+
+                    b.HasOne("OMS_Abp.Domain.Entities.Shipper", "ShipViaNavigation")
+                        .WithMany("Orders")
+                        .HasForeignKey("ShipVia");
+
                     b.Navigation("Customer");
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("ShipViaNavigation");
                 });
 
-            modelBuilder.Entity("OMS_Abp.Entities.OrderDetail", b =>
+            modelBuilder.Entity("OMS_Abp.Domain.Entities.OrderDetail", b =>
                 {
-                    b.HasOne("OMS_Abp.Entities.Order", null)
+                    b.HasOne("OMS_Abp.Domain.Entities.Order", "Order")
                         .WithMany("OrderDetails")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("OMS_Abp.Domain.Entities.Product", "Product")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("ProductId")
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("OMS_Abp.Entities.Product", b =>
+            modelBuilder.Entity("OMS_Abp.Domain.Entities.Product", b =>
                 {
-                    b.HasOne("OMS_Abp.Entities.Category", "Category")
+                    b.HasOne("OMS_Abp.Domain.Entities.Category", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
+
+                    b.HasOne("OMS_Abp.Domain.Entities.Supplier", "Supplier")
+                        .WithMany("Products")
+                        .HasForeignKey("SupplierId");
 
                     b.Navigation("Category");
+
+                    b.Navigation("Supplier");
+                });
+
+            modelBuilder.Entity("OMS_Abp.Domain.Entities.Territory", b =>
+                {
+                    b.HasOne("OMS_Abp.Domain.Entities.Region", "Region")
+                        .WithMany("Territories")
+                        .HasForeignKey("RegionId")
+                        .IsRequired();
+
+                    b.Navigation("Region");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLogAction", b =>
@@ -2186,19 +2530,60 @@ namespace OMS_Abp.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("OMS_Abp.Entities.Category", b =>
+            modelBuilder.Entity("OMS_Abp.Domain.Entities.Category", b =>
                 {
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("OMS_Abp.Entities.Customer", b =>
+            modelBuilder.Entity("OMS_Abp.Domain.Entities.Customer", b =>
+                {
+                    b.Navigation("CustomerCustomerDemos");
+
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("OMS_Abp.Domain.Entities.CustomerDemographic", b =>
+                {
+                    b.Navigation("CustomerCustomerDemos");
+                });
+
+            modelBuilder.Entity("OMS_Abp.Domain.Entities.Employee", b =>
+                {
+                    b.Navigation("EmployeeTerritories");
+
+                    b.Navigation("InverseReportsToNavigation");
+
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("OMS_Abp.Domain.Entities.Order", b =>
+                {
+                    b.Navigation("OrderDetails");
+                });
+
+            modelBuilder.Entity("OMS_Abp.Domain.Entities.Product", b =>
+                {
+                    b.Navigation("OrderDetails");
+                });
+
+            modelBuilder.Entity("OMS_Abp.Domain.Entities.Region", b =>
+                {
+                    b.Navigation("Territories");
+                });
+
+            modelBuilder.Entity("OMS_Abp.Domain.Entities.Shipper", b =>
                 {
                     b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("OMS_Abp.Entities.Order", b =>
+            modelBuilder.Entity("OMS_Abp.Domain.Entities.Supplier", b =>
                 {
-                    b.Navigation("OrderDetails");
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("OMS_Abp.Domain.Entities.Territory", b =>
+                {
+                    b.Navigation("EmployeeTerritories");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>

@@ -1,4 +1,4 @@
-﻿using OMS_Abp.Entities;
+﻿using OMS_Abp.Domain.Entities;
 using OMS_Abp.EntityMamagers.Interfaces;
 using System;
 using System.Threading;
