@@ -2,9 +2,11 @@
 {
     public class CreateProductDto
     {
-        public string ProductName { get; private set; }
+        public string ProductName { get; set; }
 
-        public int CategoryId { get; private set; }
+        public int? SupplierId { get; set; }
+
+        public int CategoryId { get; set; }
 
         public string QuantityPerUnit { get; set; }
 

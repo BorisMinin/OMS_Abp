@@ -9,6 +9,5 @@
         public const int MaxShipRegionLength = 15;
         public const int MaxShipPostalCodeLength = 10;
         public const int MaxShipCountryLength = 15;
-
     }
 }

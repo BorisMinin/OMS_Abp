@@ -9,5 +9,6 @@ public class OMS_AbpApplicationAutoMapperProfile : Profile
     public OMS_AbpApplicationAutoMapperProfile()
     {
         CreateMap<Product, GetProductDto>().ReverseMap();
+        CreateMap<CreateProductDto, Product>().ReverseMap();
     }
 }

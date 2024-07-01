@@ -10,5 +10,7 @@ namespace OMS_Abp.Interfaces
     {
         public Task<List<GetProductDto>> GetProductsAsync(CancellationToken token);
         public Task<GetProductDto> GetByIdAsync(int id, CancellationToken token);
+        public Task CreateProductAsync(CreateProductDto productDto, CancellationToken token);
+        public Task DeleteAsync(int id, CancellationToken token);
     }
 }
